@@ -60,12 +60,14 @@
       }
 
       .checkbox {
+        display: flex;
         font-size: 9px;
         margin: 10px 0;
       }
 
       .checkbox input {
         margin-right: 5px;
+        bottom: 0;
       }
 
       .btn {
@@ -179,8 +181,10 @@
             <input type="text" placeholder="Enter Your Password" />
           </div>
           <div class="checkbox">
-            <input type="checkbox" /> I agree to the
-            <a href="#">terms & policy</a>
+            <input type="checkbox" id="terms" />
+            <label for="terms"
+              >I agree to the <a href="#">terms & policy</a></label
+            >
           </div>
           <button class="btn" type="submit">Signup</button>
         </form>
