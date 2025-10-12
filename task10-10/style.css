@@ -1,0 +1,59 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  justify-content: center;
+  align-items: center;
+  max-width: 1280px;
+}
+
+h1 {
+  padding: 0 0 40px 0;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+}
+
+header nav .menu a {
+  text-decoration: none;
+  color: black;
+  padding: 0 15px;
+}
+
+header nav .menu a:hover {
+  background-color: #849fff;
+  padding: 15px;
+  border-radius: 8px;
+  color: white;
+}
+
+.search input {
+  width: 327px;
+  height: 64px;
+  position: relative;
+  padding-left: 40px;
+  margin-right: 250px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 205px;
+  top: 105px;
+}
+
+.container {
+  display: flex;
+  max-width: 1280px;
+}
+
+img {
+  border-radius: 100%;
+  width: 97px;
+  height: 97px;
+}
