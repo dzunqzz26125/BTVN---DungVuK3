@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BT1</title>
+  </head>
+  <body>
+    <script>
+      /**
+         * 
+            ## **Bài 1 — Tìm chuỗi con dài nhất liên tiếp trong mảng số(3d)**
+
+            ```js
+            const nums = [1, 2, 3, 10, 11, 12, 13, 15, 16];
+            ```
+
+            Yêu cầu:
+
+            1. Tìm ra **dãy số tăng liên tiếp dài nhất**, ví dụ:
+
+            ```
+            [10, 11, 12, 13]
+            ```
+
+            2. Không dùng 2 vòng for lồng nhau.
+            3. Gợi ý: dùng reduce để build lên cấu trúc:
+
+            ```js
+            {
+            current: [...],
+            best: [...]
+            }
+    */
+      const nums = [1, 2, 3, 10, 11, 12, 13, 15, 16];
+
+      const result = nums.reduce(
+        (acc, num) => {
+          if (acc.current.length === 0) {
+            acc.current.push(num);
+          } else if (num === acc.current[acc.current.length - 1] + 1) {
+            acc.current.push(num);
+          } else {
+            acc.current = [num];
+          }
+          if (acc.current.length > acc.best.length) {
+            acc.best = [...acc.current];
+          }
+          return acc;
+        },
+        { current: [], best: [] }
+      );
+      console.log(result.best);
+    </script>
+  </body>
+</html>

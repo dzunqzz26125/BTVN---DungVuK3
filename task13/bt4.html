@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BT4</title>
+  </head>
+  <body>
+    <script>
+      /**
+       *Bài 4 — "Deep Count" – Đếm số phần tử trong mảng lồng nhau(1.5d)
+        const arr = [1, [2, 3], [4, [5, 6, [7]]], 8];
+        Yêu cầu:
+
+        Tính số phần tử tồn tại trong toàn bộ cấu trúc:
+
+        Kết quả: 8 phần tử (1,2,3,4,5,6,7,8)
+        Nhưng:
+
+        Không được dùng đệ quy trực tiếp.
+        Không được dùng flat(Infinity).
+        Gợi ý: dùng reduce + stack.
+        */
+      const arr = [1, [2, 3], [4, [5, 6, [7]]], 8];
+
+      function deepCount(arr) {
+        let count = 0;
+        const stack = [arr];
+        while (stack.length > 0) {
+          const current = stack.pop();
+          current.forEach((item) => {
+            count++;
+
+            if (Array.isArray(item)) {
+              stack.push(item);
+            }
+          });
+        }
+        return count;
+      }
+      console.log(deepCount(arr));
+    </script>
+  </body>
+</html>

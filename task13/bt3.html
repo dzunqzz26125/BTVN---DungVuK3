@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BT3</title>
+  </head>
+  <body>
+    <script>
+      /**
+         * Bài 3 — Biến dữ liệu API dạng phức tạp thành bảng(2.5d)
+        const orders = [
+        {
+            id: 1,
+            items: [
+            { product: "A", qty: 2, price: 100 },
+            { product: "B", qty: 1, price: 200 },
+            ],
+        },
+        {
+            id: 2,
+            items: [
+            { product: "A", qty: 1, price: 100 },
+            { product: "C", qty: 4, price: 50 },
+            ],
+        },
+        ];  
+        Yêu cầu:
+
+        Tạo bảng tổng hợp doanh thu từng sản phẩm:
+
+        {
+        A: 2*100 + 1*100 = 300,
+        B: 1*200 = 200,
+        C: 4*50 = 200
+        }
+        Không dùng for lồng nhau. Phải dùng reduce + flatMap hoặc reduce 2 tầng.
+        */
+      const revenueByProduct = orders.reduce((acc, order) => {
+        return order.items.reduce((innerAcc, item) => {
+          const amount = item.qty * item.price;
+          innerAcc[item.product] = (innerAcc[item.product] || 0) + amount;
+          return innerAcc;
+        }, acc);
+      }, {});
+
+      console.log(revenueByProduct);
+      // { A: 300, B: 200, C: 200 }
+    </script>
+  </body>
+</html>
