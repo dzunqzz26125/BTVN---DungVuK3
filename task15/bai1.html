@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /**
+         * Viết hàm biến đổi mảng các chuỗi "key:value" thành object
+        Thực hiện viết hàm convertArrayToObject() để biến đổi mảng các chuỗi dạng key:value thành object
+        */
+      const arrayString = ["name:John", "age:30", "city:NY"];
+
+      function convertArrayToObject(array) {
+        return array.reduce((acc, obj) => {
+          const stringSplit = obj.split(":");
+          //   console.log(stringSplit);
+          const key = stringSplit[0];
+          const value = stringSplit[1];
+          //   console.log(key);
+          //   console.log(value);
+          acc[key] = value;
+          return acc;
+        }, {});
+      }
+
+      // Output:
+      console.log(convertArrayToObject(arrayString)); // { name: 'John', age: '30', city: 'NY' }
+    </script>
+  </body>
+</html>
