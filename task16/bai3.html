@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bai3</title>
+  </head>
+  <body>
+    <h2>Danh sách Users (id > 5)</h2>
+    <ul id="users-list"></ul>
+    <script>
+      /**
+       *Gọi API và xử lý dữ liệu
+        Yêu cầu
+        - Sử dụng fetch hoặc axios để gọi API: https://jsonplaceholder.typicode.com/users
+        Thực hiện các bước:
+        - Lấy danh sách users từ API.
+        - Lọc các user có id > 5.
+        - Tạo mảng chỉ chứa tên (name) của các user đó.
+        - Hiển thị kết quả lên website\
+
+        Kết quả mong đợi
+        In ra mảng đã sử lý lọc dữ liệu user id > 5 và chỉ chứa các tên của user đó:
+        ["Chelsey Dietrich", "Mrs. Dennis Schulist", "Kurtis Weissnat"]
+        Hiển thị danh sách tên của các user lên màn hình website
+       */
+      async function loadUsers() {
+        try {
+          const res = await fetch("https://jsonplaceholder.typicode.com/users");
+          const users = await res.json();
+
+          const userNames = users
+            .filter((user) => user.id > 5)
+            .map((user) => user.name);
+          console.log(userNames);
+
+          const list = document.getElementById("users-list");
+          list.innerHTML = userNames.map((name) => `<li>${name}</li>`).join("");
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      loadUsers();
+    </script>
+  </body>
+</html>

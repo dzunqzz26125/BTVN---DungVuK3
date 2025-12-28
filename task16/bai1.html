@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bai1</title>
+  </head>
+  <body>
+    <script>
+      /**
+         * Promise cơ bản với SetTimeout
+            Yêu cầu
+            Viết hàm delayLog(message, ms)
+            Nhận vào tham số:
+            - message (string)
+            - ms (số mili-giây)
+
+            Sau ms mili-giây thì in ra message
+            Hàm trả về Promise
+
+            Ví dụ sử dụng
+            delayLog("Hello", 1000).then(() => {
+            console.log("Done");
+            });
+            
+            Kết quả mong đợi
+            Sau 1 giây sẽ in ra: Hello, Done
+        */
+      function delayLog(message, ms) {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            console.log(message);
+            resolve();
+          }, ms);
+        });
+      }
+      delayLog("Hello", 1000).then(() => {
+        console.log("Done");
+      });
+    </script>
+  </body>
+</html>

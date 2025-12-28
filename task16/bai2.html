@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bai2</title>
+  </head>
+  <body>
+    <script>
+      /**
+       *Async/await và xử lý lỗi
+        Yêu cầu
+        Viết hàm divideAsync(a, b)
+        - Hàm sẽ trả về Promise
+        - Nếu b === 0 → reject với thông báo "Cannot divide by zero"
+        - Ngược lại resolve kết quả a / b
+        - Sau đó Gọi hàm bằng async/await
+        - Xử lý lỗi bằng try...catch
+
+        Ví dụ sử dụng
+        async function run() {
+        try {
+            const result = await divideAsync(10, 0);
+            console.log(result);
+        } catch (error) {
+            console.log(error);
+        }
+        }
+
+        run();
+        Kết quả mong đợi
+        Trường hợp Có lỗi (b === 0) in ra Cannot divide by zero
+        Trường hợp không lỗi (b !== 0) in ra kết quả a / b
+       */
+      function divideAsync(a, b) {
+        return new Promise((resolve, reject) => {
+          if (b === 0) {
+            reject("Cannot divide by zero");
+          } else {
+            resolve(a / b);
+          }
+        });
+      }
+
+      // TH1: b === 0
+      //   async function run() {
+      //     try {
+      //       const result = await divideAsync(10, 0); => in ra Cannot divide by zero
+      //       console.log(result);
+      //     } catch (error) {
+      //       console.log(error);
+      //     }
+      //   }
+
+      // TH2: b !== 0
+      async function run() {
+        try {
+          const result = await divideAsync(10, 3); // => 3.3333333333333335
+          console.log(result);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
+      run();
+    </script>
+  </body>
+</html>
