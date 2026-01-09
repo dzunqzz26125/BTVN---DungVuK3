@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đếm Từ và Ký Tự Còn Lại</title>
+    <style>
+      .container {
+        width: 500px;
+        margin: 50px auto;
+        font-family: Arial, sans-serif;
+      }
+      textarea {
+        width: 100%;
+        height: 150px;
+        padding: 10px;
+        font-size: 1em;
+        resize: vertical;
+        box-sizing: border-box;
+      }
+      #wordCount,
+      #charCount {
+        margin-top: 10px;
+        font-size: 1.1em;
+        color: #333;
+      }
+      #charCount.warning {
+        color: #e74c3c; /* Màu đỏ khi còn ít ký tự */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <textarea
+        id="textInput"
+        placeholder="Nhập đoạn văn bản (tối đa 200 ký tự)..."
+        oninput="count()"
+      ></textarea>
+      <div id="wordCount"></div>
+      <div id="charCount"></div>
+    </div>
+    <script>
+      /**
+       * Yêu cầu đề bài
+          Hiển thị số lượng từ:
+          Tạo một <textarea> để nhập nội dung.
+          Khi nhập, hiển thị số lượng từ bên dưới theo thời gian thực.
+          Bộ đếm số ký tự còn lại:
+          Tạo một <textarea> giới hạn 200 ký tự.
+          Hiển thị số ký tự còn lại khi nhập.
+      */
+      const textInput = document.getElementById("textInput");
+      const wordCount = document.getElementById("wordCount");
+      const charCount = document.getElementById("charCount");
+      const max = 200;
+      function count() {
+        let text = textInput.value;
+        if (text.length > max) {
+          textInput.value = text.slice(0, max);
+          text = textInput.value;
+        }
+        const remainingChar = max - textInput.value.length;
+        const words = textInput.value.length;
+        wordCount.innerHTML = `Số từ: ${words}`;
+        charCount.innerHTML = `Số từ còn lại: ${remainingChar}`;
+        if (remainingChar <= 20) {
+          charCount.classList.add("warning");
+        }
+      }
+    </script>
+  </body>
+</html>

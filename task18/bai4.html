@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f0f0f0;
+      }
+      .game-container {
+        text-align: center;
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      #word {
+        font-size: 2em;
+        margin-bottom: 20px;
+      }
+      #input {
+        padding: 10px;
+        font-size: 1.2em;
+        width: 200px;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+      }
+      #score {
+        font-size: 1.5em;
+        margin: 20px 0;
+      }
+      #time {
+        font-size: 1.5em;
+        color: red;
+      }
+      #start-btn {
+        padding: 10px 20px;
+        font-size: 1.2em;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      #start-btn:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="game-container">
+      <h1>Typing Game</h1>
+      <div id="word"></div>
+      <input type="text" id="input" placeholder="Type the word here" disabled />
+      <div id="score">Score: 0</div>
+      <div id="time">Time: 60</div>
+      <button id="start-btn">Start Game</button>
+    </div>
+    <script src="bai4.js"></script>
+  </body>
+</html>
