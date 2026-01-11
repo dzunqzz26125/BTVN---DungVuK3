@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bé Tập Tính</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: Arial, sans-serif;
+        background: #1f1f1f;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
+      .wrap {
+        width: min(980px, 100%);
+      }
+      .card {
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 2px;
+        padding: 28px 32px;
+      }
+      h1 {
+        margin: 0 0 22px;
+        text-align: center;
+        font-size: 34px;
+        font-weight: 700;
+        color: #2b2b2b;
+      }
+      .form-grid {
+        display: grid;
+        grid-template-columns: 140px 1fr 240px;
+        gap: 14px 18px;
+        align-items: center;
+      }
+      label {
+        color: #333;
+        font-size: 13px;
+      }
+      input[type="number"],
+      input[readonly] {
+        width: 100%;
+        height: 34px;
+        padding: 8px 10px;
+        border: 1px solid #e5e7eb;
+        border-radius: 3px;
+        outline: none;
+      }
+      input[type="number"]:focus {
+        border-color: #93c5fd;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+      }
+      input[readonly] {
+        background: #eef2f5;
+      }
+
+      .ops {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px 14px;
+        justify-items: start;
+      }
+      .op {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        color: #333;
+        user-select: none;
+      }
+
+      .btn {
+        grid-column: 3 / 4;
+        justify-self: center;
+        width: 160px;
+        height: 38px;
+        border: none;
+        border-radius: 4px;
+        background: #0d6efd;
+        color: #fff;
+        cursor: pointer;
+        font-weight: 600;
+      }
+      .btn:hover {
+        background: #0b5ed7;
+      }
+      .btn:active {
+        transform: scale(0.99);
+      }
+
+      .msg {
+        margin-top: 14px;
+        font-size: 13px;
+        min-height: 18px;
+      }
+      .msg.error {
+        color: #dc2626;
+      }
+      .msg.ok {
+        color: #16a34a;
+      }
+
+      @media (max-width: 720px) {
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+        .btn {
+          grid-column: auto;
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="card">
+        <h1>Bé Tập Tính Website</h1>
+
+        <form id="calcForm" class="form-grid">
+          <label for="a">Nhập số thứ nhất</label>
+          <input id="a" name="a" type="number" placeholder="Nhập số..." />
+          <div class="ops">
+            <label class="op"
+              ><input type="radio" name="op" value="add" /> Cộng</label
+            >
+            <label class="op"
+              ><input type="radio" name="op" value="sub" /> Trừ</label
+            >
+          </div>
+
+          <label for="b">Nhập số thứ hai</label>
+          <input id="b" name="b" type="number" placeholder="Nhập số..." />
+          <div class="ops">
+            <label class="op"
+              ><input type="radio" name="op" value="mul" /> Nhân</label
+            >
+            <label class="op"
+              ><input type="radio" name="op" value="div" /> Chia</label
+            >
+          </div>
+
+          <label for="result">Kết quả</label>
+          <input
+            id="result"
+            type="text"
+            readonly
+            placeholder="Kết quả sẽ hiện ở đây"
+          />
+          <button class="btn" type="submit">Tính</button>
+        </form>
+
+        <div id="msg" class="msg"></div>
+      </div>
+    </div>
+
+    <script>
+      const form = document.getElementById("calcForm");
+      const resultEl = document.getElementById("result");
+      const msgEl = document.getElementById("msg");
+
+      function setMsg(text, type) {
+        msgEl.textContent = text || "";
+        msgEl.className = "msg" + (type ? " " + type : "");
+      }
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        setMsg("", "");
+        resultEl.value = "";
+
+        const data = new FormData(form);
+
+        const aRaw = data.get("a");
+        const bRaw = data.get("b");
+        const op = data.get("op");
+
+        if (!aRaw?.trim() || !bRaw?.trim()) {
+          setMsg("Vui lòng nhập đủ 2 số.", "error");
+          return;
+        }
+
+        const a = Number(aRaw);
+        const b = Number(bRaw);
+
+        if (Number.isNaN(a) || Number.isNaN(b)) {
+          setMsg("Dữ liệu không hợp lệ. Hãy nhập số.", "error");
+          return;
+        }
+
+        if (!op) {
+          setMsg("Vui lòng chọn phép tính.", "error");
+          return;
+        }
+
+        if (op === "div" && b === 0) {
+          setMsg("Không hợp lệ: không thể chia cho 0.", "error");
+          return;
+        }
+
+        let res;
+        switch (op) {
+          case "add":
+            res = a + b;
+            break;
+          case "sub":
+            res = a - b;
+            break;
+          case "mul":
+            res = a * b;
+            break;
+          case "div":
+            res = a / b;
+            break;
+        }
+
+        resultEl.value = res;
+        setMsg("Tính thành công!", "ok");
+      });
+    </script>
+  </body>
+</html>

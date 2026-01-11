@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chia Bill</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: Arial, sans-serif;
+        background: #1f1f1f;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        color: #111827;
+      }
+      .wrap {
+        width: min(900px, 100%);
+      }
+      .card {
+        background: #fff;
+        border-radius: 6px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+        padding: 28px 28px 22px;
+      }
+      h1 {
+        text-align: center;
+        margin: 0 0 22px;
+        font-size: 44px;
+        font-weight: 800;
+        color: #111;
+      }
+
+      .field {
+        margin-bottom: 14px;
+      }
+      .label {
+        font-weight: 700;
+        margin-bottom: 6px;
+        display: block;
+      }
+      input {
+        width: 100%;
+        height: 44px;
+        border: 1px solid #e5e7eb;
+        border-radius: 6px;
+        padding: 10px 12px;
+        font-size: 16px;
+        outline: none;
+        background: #fff;
+      }
+      input:focus {
+        border-color: #93c5fd;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+      }
+      .btn {
+        min-width: 140px;
+        height: 44px;
+        margin: auto;
+        border-radius: 6px;
+        border: 2px solid #0f5c2a;
+        background: #0b7a2a;
+        color: #fff;
+        font-weight: 700;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      .btn:hover {
+        filter: brightness(1.05);
+      }
+      .btn:active {
+        transform: scale(0.99);
+      }
+
+      .msg {
+        text-align: center;
+        margin-top: 8px;
+        min-height: 18px;
+        font-size: 14px;
+      }
+      .msg.error {
+        color: #dc2626;
+      }
+      .msg.ok {
+        color: #16a34a;
+      }
+
+      .result {
+        text-align: center;
+        margin-top: 18px;
+        font-size: 16px;
+        line-height: 1.8;
+      }
+      .result strong {
+        font-weight: 800;
+      }
+      .muted {
+        color: #374151;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrap">
+      <div class="card">
+        <h1>Chia Bill</h1>
+
+        <form id="billForm">
+            <div class="field">
+                <label>Tổng bill:</label>
+                <input type="number" name="bill" placeholder="Nhập tổng bill..." />
+            </div>
+
+            <div class="field">
+                <label>Số người chia:</label>
+                <input type="number" name="people" placeholder="Nhập số người..." />
+            </div>
+
+            <div class="field">
+                <label>Tiền tip:</label>
+                <input type="number" name="tip" placeholder="Nhập tiền tip (nếu có)..." />
+            </div>
+
+            <button class="btn" type="submit">Tính tiền</button>
+        </form>
+
+        <div id="result"></div>
+        <div id="msg"></div>
+
+
+    <script>
+    const form = document.getElementById("billForm");
+    const resultEl = document.getElementById("result");
+    const msgEl = document.getElementById("msg");
+
+    function showMsg(text, isError = true) {
+        msgEl.textContent = text;
+        msgEl.style.color = isError ? "red" : "green";
+    }
+
+    function formatVND(n) {
+        return Number(n).toFixed(2) + " VND";
+    }
+
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const data = new FormData(form);
+
+        const bill = Number(data.get("bill"));
+        const people = Number(data.get("people"));
+        const tip = Number(data.get("tip")) || 0;
+
+        if (!bill || !people) {
+            showMsg("Vui lòng nhập Tổng bill và Số người chia");
+            return;
+        }
+
+        if (bill <= 0) {
+            showMsg("Tổng bill phải lớn hơn 0");
+            return;
+        }
+
+        if (!Number.isInteger(people) || people <= 0) {
+            showMsg("Số người chia phải là số nguyên lớn hơn 0");
+            return;
+        }
+
+        if (tip < 0) {
+            showMsg("Tiền tip không được âm");
+            return;
+        }
+
+        if (tip > bill) {
+            showMsg("Tiền tip không được lớn hơn tổng bill");
+            return;
+        }
+
+        const total = bill + tip;
+        const perPerson = total / people;
+
+        resultEl.innerHTML = `
+            <p>Mỗi người cần trả: <b>${formatVND(perPerson)}</b></p>
+            <p>Tổng số tiền cần trả: <b>${formatVND(total)}</b></p>
+        `;
+
+        showMsg("Tính tiền thành công!", false);
+    });
+
+    </script>
+  </body>
+</html>
